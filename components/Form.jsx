@@ -14,7 +14,6 @@ const Form = ({ title, message, id }) => {
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-        console.log(cekInputTitle(inputTitle));
         if(cekInputTitle(inputTitle) && cekInputBody(inputBody)){
             submitPost(id);
         }else{
