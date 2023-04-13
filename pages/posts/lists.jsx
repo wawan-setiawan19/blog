@@ -51,7 +51,7 @@ const ListPost = () => {
                 {!posts && status == 'err'? <ErrorHandling message={errMessage}/>:''}
                 {posts && posts.map((post)=>{
                     return(
-                    <Card>
+                    <Card key={post.id}>
                         <CardHeader>
                             <Heading>{post.title}</Heading>
                         </CardHeader>
