@@ -3,7 +3,9 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-const Form = ({ title='', message='', id }) => {
+const Form = ({ title, message, id }) => {
+    title?title:'';
+    message?message:'';
     const [inputTitle,setInputTitle] = useState(title);
     const [inputBody,setInputBody] = useState(message);
     const [statusTitle, setStatusTitle] = useState('');
@@ -12,21 +14,30 @@ const Form = ({ title='', message='', id }) => {
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-        cekInput(inputTitle, inputBody)
+        console.log(cekInputTitle(inputTitle));
+        if(cekInputTitle(inputTitle) && cekInputBody(inputBody)){
+            submitPost(id);
+        }else{
+            console.log('ada error');
+        }
     }
 
-    const cekInput = (inputTitle, inputBody) =>{
-        setStatusBody('')
-        setStatusTitle('')
-        if (inputTitle === '') {
+    const cekInputTitle = (inputTitle) =>{
+        if (!inputTitle) {
             setStatusTitle('error')
+            return false
+        }else{
+            setStatusTitle('')
+            return true
         }
-        if(inputBody === ''){
+    }
+    const cekInputBody = (inputBody) =>{
+        if(!inputBody){
             setStatusBody('error')
-        }
-
-        if(statusBody !== 'error' && statusTitle !== 'error'){
-            submitPost(id);
+            return false
+        }else{
+            setStatusBody('')
+            return true
         }
     }
 
@@ -45,7 +56,7 @@ const Form = ({ title='', message='', id }) => {
                 body: inputBody,
             })
             .then(res=>{
-                alert('data berhasil diedit')
+                alert(`data ${id} berhasil diedit`)
                 router.push('/posts/lists')
             })
             .catch(err=>console.error(err))
@@ -55,7 +66,7 @@ const Form = ({ title='', message='', id }) => {
                 body: inputBody,
             })
             .then(res=>{
-                alert('data berhasil diinput')
+                alert('data berhasil ditambahkan');
                 router.push('/posts/lists')
             })
             .catch(err=>console.error(err))

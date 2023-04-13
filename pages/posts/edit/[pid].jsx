@@ -17,7 +17,7 @@ const Edit = () => {
         fetchDataID(pid)
         .then((res)=> {
             setData(res.data)
-            console.log(data.title)
+            console.log(data);
         })
         .catch((err)=> {
             console.log(err.message);
@@ -25,7 +25,7 @@ const Edit = () => {
     },[])
     return (
         <Container maxW='8xl'>
-            <Form title={data.title}/>
+            {data && <Form title={data.title} message={data.body} id={data.id}/>}
         </Container>
     )
 }
